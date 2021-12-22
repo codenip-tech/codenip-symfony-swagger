@@ -14,7 +14,9 @@ RUN apt update \
     # common libraries and extensions
     && apt install -y git acl openssl openssh-client wget zip \
     && apt install -y libpng-dev zlib1g-dev libzip-dev libxml2-dev libicu-dev \
-    && docker-php-ext-install intl zip
+    && docker-php-ext-install intl zip \
+    && pecl install xdebug \
+    && docker-php-ext-enable --ini-name 05-opcache.ini opcache xdebug
 
 # Install and update composer
 RUN curl https://getcomposer.org/composer.phar -o /usr/bin/composer && chmod +x /usr/bin/composer

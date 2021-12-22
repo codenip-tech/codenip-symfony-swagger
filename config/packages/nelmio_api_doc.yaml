@@ -1,0 +1,95 @@
+nelmio_api_doc:
+  documentation:
+    info:
+      title: Codenip Swagger API
+      version: 1.0.0
+    paths:
+      /:
+        get:
+          description: Health Check endpoint
+          tags:
+            - Health check
+          responses:
+            200:
+              description: OK
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      status: { type: string, example: 'OK' }
+      /api/register:
+        post:
+          description: Creates a new user
+          tags:
+            - User
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/RegisterDTO'
+          responses:
+            201:
+              description: User created
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/UserResponse'
+      /api/users:
+        get:
+          description: Retrives a user by email
+          tags:
+            - User
+          parameters:
+            - in: query
+              name: email
+              required: true
+              schema:
+                type: string
+          responses:
+            200:
+              description: User data
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/UserResponse'
+      /api/users/{userId}:
+        get:
+          description: Retrives a user by ID
+          tags:
+            - User
+          parameters:
+            - in: path
+              name: userId
+              required: true
+              schema:
+                type: string
+          responses:
+            200:
+              description: User data
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/UserResponse'
+
+    tags:
+      - name: Health check
+      - name: User
+
+    components:
+      schemas:
+        RegisterDTO:
+          type: object
+          properties:
+            name: { type: string, example: 'Peter' }
+            email: { type: string, example: 'peter@email.com' }
+        UserResponse:
+          type: object
+          properties:
+            name: { type: string, example: 'Peter' }
+            email: { type: string, example: 'peter@email.com' }
+            createdOn: { type: string, example: '2021-12-22T21:36:17+00:00' }
+
+  areas: # to filter documented areas
+    path_patterns:
+      - ^/api(?!(/doc|/doc.json)$) # Accepts routes under /api except /api/doc

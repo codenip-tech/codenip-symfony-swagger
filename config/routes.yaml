@@ -2,7 +2,12 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 
-messenger:
-  path: /messenger
-  controller: App\Controller\MessengerAction
-  methods: [GET]
+health_check:
+  path: /
+  controller: App\Controller\HealthCheck
+  methods: [ GET ]
+
+register:
+  path: /api/register
+  controller: App\Controller\User\Register
+  methods: [ POST ]
